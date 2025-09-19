@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>119練習アプリ（複数シナリオ）</title>
+<style>
+body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; background: #f2f2f2; }
+.phone { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px #aaa; width: 300px; text-align: center; }
+.display { font-size: 2em; margin-bottom: 10px; }
+.button { padding: 15px 20px; margin: 5px; font-size: 1.2em; border-radius: 5px; border: none; background: #4CAF50; color: white; }
+.choice { background: #2196F3; }
+#feedback { margin-top: 20px; font-size: 1.2em; color: #d32f2f; white-space: pre-line; }
+</style>
+</head>
+<body>
+
+<h1>119練習アプリ（複数シナリオ）</h1>
+<div class="phone">
+    <div class="display" id="display">---</div>
+    <div>
+        <button class="button" onclick="pressNumber('1')">1</button>
+        <button class="button" onclick="pressNumber('2')">2</button>
+        <button class="button" onclick="pressNumber('3')">3</button><br>
+        <button class="button" onclick="pressNumber('4')">4</button>
+        <button class="button" onclick="pressNumber('5')">5</button>
+        <button class="button" onclick="pressNumber('6')">6</button><br>
+        <button class="button" onclick="pressNumber('7')">7</button>
+        <button class="button" onclick="pressNumber('8')">8</button>
+        <button class="button" onclick="pressNumber('9')">9</button><br>
+        <button class="button" onclick="pressNumber('0')">0</button>
+        <button class="button" onclick="call119()">通話開始</button>
+    </div>
+    <div id="choices" style="margin-top:20px;"></div>
+    <div id="feedback"></div>
+</div>
+
+<!-- 音声ファイルを追加 -->
+<audio id="fireAudio" src="fire.mp3"></audio>
+<audio id="ambulanceAudio" src="ambulance.mp3"></audio>
+<audio id="injuryAudio" src="injury.mp3"></audio>
+
+<script>
+let number = '';
+let scenarioIndex = 0;
+
+const scenarios = [
+    { question: "火事ですか？救急ですか？", choices: ["火事", "救急"], audio: ["fireAudio","ambulanceAudio"] },
+    { question: "住所を教えてください。", choices: ["近所の公園", "自宅"], audio: [null,null] },
+    { question: "けが人はいますか？", choices: ["はい", "いいえ"], audio: [null,null] }
+];
+
+function pressNumber(num) {
+    number += num;
+    document.getElementById('display').innerText = number;
+}
+
+function call119() {
+    if(number === "119") {
+        scenarioIndex = 0;
+        showScenario();
+    } else {
+        document.getElementById('feedback').innerText = "番号が違います。119を押してください。";
+    }
+}
+
+function showScenario() {
+    const feedback = document.getElementById('feedback');
+    const choicesDiv = document.getElementById('choices');
+    const scenario = scenarios[scenarioIndex];
+
+    feedback.innerText = scenario.question;
+    choicesDiv.innerHTML = '';
+
+    scenario.choices.forEach((choice, i) => {
+        const btn = document.createElement('button');
+        btn.innerText = choice;
+        btn.className = "button choice";
+        btn.onclick = () => answer(i);
+        choicesDiv.appendChild(btn);
+    });
+
+    // 音声再生
+    if(scenario.audio[0]) {
+        const audio = document.getElementById(scenario.audio[0]);
+        audio.play();
+    }
+}
+
+function answer(choiceIndex) {
+    const feedback = document.getElementById('feedback');
+    scenarioIndex++;
+    if(scenarioIndex < scenarios.length) {
+        showScenario();
+    } else {
+        document.getElementById('choices').innerHTML = '';
+        feedback.innerText = "✅ 練習終了！\n正しい通報手順を学べました。";
+    }
+}
+</script>
+
+</body>
+</html
