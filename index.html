@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>通報訓練</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="phone">
+
+  <!-- シーン画面 -->
+  <div id="sceneScreen" class="screen">
+    <img id="sceneImage">
+    <button id="nextBtn">次へ ▶</button>
+  </div>
+
+  <!-- 電話画面 -->
+  <div id="callScreen" class="screen hidden">
+
+    <div id="imageArea" class="image-area hidden">
+      <img id="callImage">
+    </div>
+
+    <div class="info">
+      <div id="status">番号を入力してください</div>
+      <div id="number"></div>
+      <div id="speech"></div>
+    </div>
+
+    <div id="keypad" class="keypad">
+      <div class="keys">
+        <button>1</button><button>2</button><button>3</button>
+        <button>4</button><button>5</button><button>6</button>
+        <button>7</button><button>8</button><button>9</button>
+        <button>*</button><button>0</button><button>#</button>
+      </div>
+      <div class="actions">
+        <button id="callBtn">📞 発信</button>
+        <button id="clearBtn">消去</button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
