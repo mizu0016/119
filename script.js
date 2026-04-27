@@ -11,7 +11,7 @@ const keypad = document.getElementById("keypad");
 let inputNumber = "";
 
 /* 画像 */
-const scenes = ["peg/fire.png", "peg/ambulance_scene.png", "peg/police.png"];
+const scenes = ["peg/fire.png", "ambulance_scene.png", "peg/police.png"];
 
 /* 音声 */
 const ringtone = new Audio("mp3/ringtone.mp3");
